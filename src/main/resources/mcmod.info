@@ -1,0 +1,16 @@
+[
+  {
+    "modid": "levels",
+    "name": "Levels",
+    "description": "Add levels to Minecraft and links actions to them",
+    "version": "${version}",
+    "mcversion": "${mcversion}",
+    "url": "https://github.com/cadyyan/levels",
+    "updateUrl": "",
+    "authorList": ["Cadyyan"],
+    "credits": "MineTweaker and ModTweaker for the idea",
+    "logoFile": "",
+    "screenshots": [],
+    "dependencies": []
+  }
+]
