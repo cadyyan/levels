@@ -15,7 +15,7 @@ public class SerializationHelper
 		MinecraftServer server = FMLCommonHandler.instance().getMinecraftServerInstance();
 
 		File worldDirectory = server.getEntityWorld().getSaveHandler().getWorldDirectory();
-		playerDataDirectory = new File(worldDirectory, "playerData" + File.separator + Levels.MOD_ID.toLowerCase());
+		playerDataDirectory = new File(worldDirectory, "playerdata" + File.separator + Levels.MOD_ID.toLowerCase());
 
 		if (!playerDataDirectory.mkdirs())
 			LogUtility.error("Unable to create the player level directory.");
