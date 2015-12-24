@@ -6,13 +6,11 @@ import com.cadyyan.levels.utils.SerializationHelper;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonWriter;
 import ibxm.Player;
 import net.minecraft.entity.player.EntityPlayer;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -42,7 +40,7 @@ public class LevelRegistry
 		if (playerLevelCache.containsKey(playerUUID))
 			return;
 
-		File playerLevelFile = new File(playerLevelDirectory, playerUUID.toString() + ".json");
+		File playerLevelFile = getPlayerLevelFile(playerUUID);
 		if (!playerLevelFile.exists() || !playerLevelFile.isFile())
 			return;
 
@@ -72,8 +70,58 @@ public class LevelRegistry
 		loadPlayerLevelsFromDisk(player.getUniqueID());
 	}
 
+	public void savePlayerLevelsToDisk(UUID playerUUID)
+	{
+		if (playerUUID == null)
+			return;
+
+		if (!playerLevelCache.containsKey(playerUUID))
+			return;
+
+		File playerLevelFile = getPlayerLevelFile(playerUUID);
+		if (!playerLevelFile.exists() || !playerLevelFile.isFile())
+			return;
+
+		PlayerLevels playerLevels = playerLevelCache.get(playerUUID);
+		// TODO(cadyyan): it would probably also be beneficial to have a flag that says whether the data has even been modified
+
+		// We write everything to a temporary file first so that if something happens while writing the data to disk
+		// we don't risk corrupting the existing data. Only the latest progress will be lost. After we finish writing
+		// the new data to disk we can replace the old file with the new one.
+		File tmpFile = getPlayerLevelTempFile(playerUUID);
+		try
+		{
+			JsonWriter jsonWriter = new JsonWriter(new FileWriter(tmpFile));
+			jsonWriter.setIndent("    ");
+			jsonSerializer.toJson(playerLevels, PlayerLevels.class, jsonWriter);
+			jsonWriter.close();
+		}
+		catch (IOException e)
+		{
+			LogUtility.error("Unable to save player {}'s level data to disk.\n{}", e.getStackTrace());
+		}
+	}
+
+	public void savePlayerLevelsToDisk(EntityPlayer player)
+	{
+		if (player == null || player.getUniqueID() == null)
+			return;
+
+		savePlayerLevelsToDisk(player.getUniqueID());
+	}
+
 	private LevelRegistry()
 	{
 		playerLevelDirectory = SerializationHelper.getPlayerDataDirectory();
+	}
+
+	private File getPlayerLevelFile(UUID playerUUID)
+	{
+		return new File(playerLevelDirectory, playerUUID.toString() + ".json");
+	}
+
+	private File getPlayerLevelTempFile(UUID playerUUID)
+	{
+		return new File(playerLevelDirectory, playerUUID.toString() + ".json.tmp");
 	}
 }

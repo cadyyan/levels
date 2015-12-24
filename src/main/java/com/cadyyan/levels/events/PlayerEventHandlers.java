@@ -17,4 +17,15 @@ public class PlayerEventHandlers
 
 		LevelRegistry.getInstance().loadPlayerLevelsFromDisk(player);
 	}
+
+	@SubscribeEvent
+	public void onPlayerSaveToFile(PlayerEvent.SaveToFile event)
+	{
+		EntityPlayer player = event.entityPlayer;
+
+		if (player.getEntityWorld().isRemote)
+			return;
+
+		LevelRegistry.getInstance().savePlayerLevelsToDisk(player);
+	}
 }
