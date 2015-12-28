@@ -1,4 +1,4 @@
-package com.cadyyan.levels.events;
+package com.cadyyan.levels.handlers;
 
 import com.cadyyan.levels.registries.LevelRegistry;
 import net.minecraft.entity.player.EntityPlayer;

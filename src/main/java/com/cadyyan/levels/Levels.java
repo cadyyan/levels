@@ -1,5 +1,6 @@
 package com.cadyyan.levels;
 
+import com.cadyyan.levels.handlers.ConfigurationHandler;
 import com.cadyyan.levels.items.RecipeDecorator;
 import com.cadyyan.levels.proxies.IProxy;
 import com.cadyyan.levels.utils.SerializationHelper;
@@ -38,6 +39,7 @@ public class Levels
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event)
 	{
+		ConfigurationHandler.init(event.getSuggestedConfigurationFile());
 	}
 
 	@EventHandler

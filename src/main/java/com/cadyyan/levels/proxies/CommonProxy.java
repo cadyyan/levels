@@ -1,6 +1,6 @@
 package com.cadyyan.levels.proxies;
 
-import com.cadyyan.levels.events.PlayerEventHandlers;
+import com.cadyyan.levels.handlers.PlayerEventHandlers;
 import net.minecraftforge.common.MinecraftForge;
 
 public class CommonProxy implements IProxy
