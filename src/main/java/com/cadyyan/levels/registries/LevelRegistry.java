@@ -110,6 +110,11 @@ public class LevelRegistry
 		savePlayerLevelsToDisk(player.getUniqueID());
 	}
 
+	public PlayerLevels getPlayerLevels(EntityPlayer player)
+	{
+		return playerLevelCache.getOrDefault(player, new PlayerLevels());
+	}
+
 	private LevelRegistry()
 	{
 		playerLevelDirectory = SerializationHelper.getPlayerDataDirectory();

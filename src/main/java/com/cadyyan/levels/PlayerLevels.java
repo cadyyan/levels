@@ -1,6 +1,5 @@
 package com.cadyyan.levels;
 
-import com.cadyyan.levels.utils.LogUtility;
 import com.google.gson.*;
 
 import java.lang.reflect.Type;
@@ -34,7 +33,7 @@ public class PlayerLevels implements JsonSerializer<PlayerLevels>, JsonDeseriali
 	{
 		long skillXP = getExperienceForSkill(skillName);
 
-		return Math.min((int) Math.floor(Math.log(skillXP / 100 + 1) / LOG_BASE_1_25), MAX_LEVEL);
+		return Math.min((int) Math.floor(Math.log(skillXP / 100 + 1) / LOG_BASE_1_25) + 1, MAX_LEVEL);
 	}
 
 	public int getRequiredExperience(int level)

@@ -2,13 +2,8 @@ package com.cadyyan.levels;
 
 import com.cadyyan.levels.handlers.ConfigurationHandler;
 import com.cadyyan.levels.plugins.PluginMinecraft;
-import com.cadyyan.levels.recipes.LevelRecipe;
 import com.cadyyan.levels.proxies.IProxy;
 import com.cadyyan.levels.utils.SerializationHelper;
-import net.minecraft.item.crafting.CraftingManager;
-import net.minecraft.item.crafting.IRecipe;
-import net.minecraft.item.crafting.ShapedRecipes;
-import net.minecraft.item.crafting.ShapelessRecipes;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;

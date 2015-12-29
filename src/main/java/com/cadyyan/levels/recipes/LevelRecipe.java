@@ -1,5 +1,8 @@
 package com.cadyyan.levels.recipes;
 
+import com.cadyyan.levels.PlayerLevels;
+import com.cadyyan.levels.registries.LevelRegistry;
+import com.cadyyan.levels.skills.ISkill;
 import com.cadyyan.levels.utils.LogUtility;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.*;
@@ -8,13 +11,18 @@ import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.ReflectionHelper;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class LevelRecipe implements IRecipe
 {
-	private IRecipe recipe;
+	private final IRecipe recipe;
+	private final Map<ISkill, Integer> requiredSkills;
 
-	public LevelRecipe(IRecipe recipe)
+	public LevelRecipe(IRecipe recipe, Map<ISkill, Integer> requiredSkills)
 	{
 		this.recipe = recipe;
+		this.requiredSkills = requiredSkills;
 	}
 
 	@Override
@@ -43,9 +51,23 @@ public class LevelRecipe implements IRecipe
 			return recipe.matches(inventory, world);
 		}
 
+		// Check for a valid recipe
+		if (!recipe.matches(inventory, world))
+			return false;
+
+		PlayerLevels playerLevels = LevelRegistry.getInstance().getPlayerLevels(player);
+		for (Map.Entry<ISkill, Integer> skillEntry : requiredSkills.entrySet())
+		{
+			ISkill skill = skillEntry.getKey();
+			int requiredLevel = skillEntry.getValue();
+
+			int level = playerLevels.getLevelForSkill(skill.getUnlocalizedName());
+			if (level < requiredLevel)
+				return false;
+		}
 		// TODO(cadyyan): check the player's level and the item that they are trying to craft
 
-		return recipe.matches(inventory, world);
+		return true;
 	}
 
 	@Override
