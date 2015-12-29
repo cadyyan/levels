@@ -14,7 +14,7 @@ public class ConfigurationHandler
 	public static void init(File suggestedConfigFile)
 	{
 		File configDir = new File(suggestedConfigFile.getParentFile(), Levels.MOD_ID);
-		if (!configDir.mkdirs())
+		if (!configDir.exists() && !configDir.mkdirs())
 			throw new RuntimeException("Unable to create the configuration directory");
 
 		File generalConfigFile = new File(configDir, "configuration.cfg");
