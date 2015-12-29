@@ -1,4 +1,4 @@
-package com.cadyyan.levels.items;
+package com.cadyyan.levels.recipes;
 
 import com.cadyyan.levels.utils.LogUtility;
 import net.minecraft.entity.player.EntityPlayer;
@@ -8,11 +8,11 @@ import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.ReflectionHelper;
 
-public class RecipeDecorator implements IRecipe
+public class LevelRecipe implements IRecipe
 {
 	private IRecipe recipe;
 
-	public RecipeDecorator(IRecipe recipe)
+	public LevelRecipe(IRecipe recipe)
 	{
 		this.recipe = recipe;
 	}

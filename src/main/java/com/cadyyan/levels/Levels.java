@@ -1,7 +1,8 @@
 package com.cadyyan.levels;
 
 import com.cadyyan.levels.handlers.ConfigurationHandler;
-import com.cadyyan.levels.items.RecipeDecorator;
+import com.cadyyan.levels.plugins.PluginMinecraft;
+import com.cadyyan.levels.recipes.LevelRecipe;
 import com.cadyyan.levels.proxies.IProxy;
 import com.cadyyan.levels.utils.SerializationHelper;
 import net.minecraft.item.crafting.CraftingManager;
@@ -16,11 +17,8 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
-import net.minecraftforge.oredict.ShapedOreRecipe;
-import net.minecraftforge.oredict.ShapelessOreRecipe;
 
-import java.util.List;
-
+@SuppressWarnings("unused")
 @Mod(modid = Levels.MOD_ID, name = Levels.NAME, version = Levels.VERSION)
 public class Levels
 {
@@ -40,6 +38,8 @@ public class Levels
 	public void preInit(FMLPreInitializationEvent event)
 	{
 		ConfigurationHandler.init(event.getSuggestedConfigurationFile());
+
+		proxy.registerPlugin(new PluginMinecraft());
 	}
 
 	@EventHandler
@@ -51,31 +51,12 @@ public class Levels
 	@EventHandler
 	public void postInit(FMLPostInitializationEvent event)
 	{
-		overrideRecipes();
+		proxy.initializePlugins();
 	}
 
 	@EventHandler
 	public void onServerStarting(FMLServerStartingEvent event)
 	{
 		SerializationHelper.init();
-	}
-
-	private void overrideRecipes()
-	{
-		List<IRecipe> recipes = CraftingManager.getInstance().getRecipeList();
-		for (int i = recipes.size() - 1; i > 0; i--)
-		{
-			IRecipe recipe = recipes.get(i);
-
-			if (recipe instanceof ShapelessRecipes ||
-					recipe instanceof ShapedRecipes ||
-					recipe instanceof ShapelessOreRecipe ||
-					recipe instanceof ShapedOreRecipe)
-			{
-				RecipeDecorator recipeDecorator = new RecipeDecorator(recipe);
-
-				recipes.set(i, recipeDecorator);
-			}
-		}
 	}
 }
