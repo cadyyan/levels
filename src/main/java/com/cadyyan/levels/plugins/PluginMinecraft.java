@@ -13,6 +13,11 @@ public class PluginMinecraft implements IPlugin
 {
 	private static final Set<IRecipeOverride> PLUGIN_RECIPES = new LinkedHashSet<IRecipeOverride>();
 
+	public String getName()
+	{
+		return "Minecraft";
+	}
+
 	@Override
 	public boolean versionMatches()
 	{
