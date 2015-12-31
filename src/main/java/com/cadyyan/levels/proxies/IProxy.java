@@ -6,5 +6,6 @@ public interface IProxy
 {
 	void registerPlugin(IPlugin plugin);
 	void registerEventHandlers();
+	void registerSkills();
 	void initializePlugins();
 }

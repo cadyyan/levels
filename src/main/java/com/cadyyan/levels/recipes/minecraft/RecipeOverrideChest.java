@@ -2,8 +2,8 @@ package com.cadyyan.levels.recipes.minecraft;
 
 import com.cadyyan.levels.recipes.IRecipeOverride;
 import com.cadyyan.levels.recipes.LevelRecipe;
+import com.cadyyan.levels.registries.SkillRegistry;
 import com.cadyyan.levels.skills.ISkill;
-import com.cadyyan.levels.skills.SkillCarpentry;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.ShapedRecipes;
@@ -18,7 +18,7 @@ public class RecipeOverrideChest implements IRecipeOverride
 {
 	private static final Map<ISkill, Integer> REQUIRED_SKILLS = new HashMap<ISkill, Integer>();
 	static {
-		REQUIRED_SKILLS.put(new SkillCarpentry(), 1);
+		REQUIRED_SKILLS.put(SkillRegistry.getInstance().getSkill("carpentry"), 1);
 	}
 
 	@Override

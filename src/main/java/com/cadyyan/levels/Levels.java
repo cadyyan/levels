@@ -41,6 +41,7 @@ public class Levels
 	public void init(FMLInitializationEvent event)
 	{
 		proxy.registerEventHandlers();
+		proxy.registerSkills();
 	}
 
 	@EventHandler

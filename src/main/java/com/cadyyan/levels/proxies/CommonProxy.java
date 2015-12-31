@@ -3,6 +3,8 @@ package com.cadyyan.levels.proxies;
 import com.cadyyan.levels.handlers.PlayerEventHandlers;
 import com.cadyyan.levels.plugins.IPlugin;
 import com.cadyyan.levels.plugins.PluginMinecraft;
+import com.cadyyan.levels.registries.SkillRegistry;
+import com.cadyyan.levels.skills.SkillCarpentry;
 import com.cadyyan.levels.utils.LogUtility;
 import net.minecraftforge.common.MinecraftForge;
 
@@ -24,6 +26,12 @@ public class CommonProxy implements IProxy
 	public void registerEventHandlers()
 	{
 		MinecraftForge.EVENT_BUS.register(new PlayerEventHandlers());
+	}
+
+	public void registerSkills()
+	{
+		// TODO(cadyyan): check for disabled skills in the config
+		SkillRegistry.getInstance().registerSkill(new SkillCarpentry());
 	}
 
 	@Override
