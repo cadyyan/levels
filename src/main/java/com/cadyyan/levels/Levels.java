@@ -34,7 +34,7 @@ public class Levels
 	{
 		ConfigurationHandler.init(event.getSuggestedConfigurationFile());
 
-		proxy.registerPlugin(new PluginMinecraft());
+		setupPlugins();
 	}
 
 	@EventHandler
@@ -54,5 +54,11 @@ public class Levels
 	public void onServerStarting(FMLServerStartingEvent event)
 	{
 		SerializationHelper.init();
+	}
+
+	private void setupPlugins()
+	{
+		if (Settings.Plugins.enabledMinecraft)
+			proxy.registerPlugin(new PluginMinecraft());
 	}
 }

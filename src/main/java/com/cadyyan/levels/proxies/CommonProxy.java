@@ -38,7 +38,6 @@ public class CommonProxy implements IProxy
 	@Override
 	public void initializePlugins()
 	{
-		// TODO(cadyyan): do a config check to turn off plugins
 		for (IPlugin plugin : plugins)
 		{
 			LogUtility.trace("Initializing {} plugin", plugin.getName());

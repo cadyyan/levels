@@ -26,6 +26,7 @@ public class ConfigurationHandler
 
 	public static void loadConfiguration()
 	{
+		Settings.Plugins.enabledMinecraft = configuration.getBoolean("minecraft", "skills", true, "Enable Minecraft plugin");
 		Settings.Skills.enabledCarpentry = configuration.getBoolean("carpentry", "skills", true, "Enable the carpentry skill");
 	}
 
