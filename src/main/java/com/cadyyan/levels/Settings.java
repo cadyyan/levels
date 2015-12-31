@@ -2,9 +2,11 @@ package com.cadyyan.levels;
 
 public class Settings
 {
-	public static class General
+	public static class Skills
 	{
-		private General()
+		public static boolean enabledCarpentry;
+
+		private Skills()
 		{
 		}
 	}

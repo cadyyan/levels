@@ -1,6 +1,7 @@
 package com.cadyyan.levels.handlers;
 
 import com.cadyyan.levels.Levels;
+import com.cadyyan.levels.Settings;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -25,6 +26,7 @@ public class ConfigurationHandler
 
 	public static void loadConfiguration()
 	{
+		Settings.Skills.enabledCarpentry = configuration.getBoolean("carpentry", "skills", true, "Enable the carpentry skill");
 	}
 
 	@SubscribeEvent

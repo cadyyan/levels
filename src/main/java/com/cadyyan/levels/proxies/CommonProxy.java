@@ -1,5 +1,6 @@
 package com.cadyyan.levels.proxies;
 
+import com.cadyyan.levels.Settings;
 import com.cadyyan.levels.handlers.PlayerEventHandlers;
 import com.cadyyan.levels.plugins.IPlugin;
 import com.cadyyan.levels.plugins.PluginMinecraft;
@@ -30,8 +31,8 @@ public class CommonProxy implements IProxy
 
 	public void registerSkills()
 	{
-		// TODO(cadyyan): check for disabled skills in the config
-		SkillRegistry.getInstance().registerSkill(new SkillCarpentry());
+		if (Settings.Skills.enabledCarpentry)
+			SkillRegistry.getInstance().registerSkill(new SkillCarpentry());
 	}
 
 	@Override
