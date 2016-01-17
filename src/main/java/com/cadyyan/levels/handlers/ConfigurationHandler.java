@@ -11,10 +11,11 @@ import java.io.File;
 public class ConfigurationHandler
 {
 	public static Configuration configuration;
+	public static File configDir;
 
 	public static void init(File suggestedConfigFile)
 	{
-		File configDir = new File(suggestedConfigFile.getParentFile(), Levels.MOD_ID);
+		configDir = new File(suggestedConfigFile.getParentFile(), Levels.MOD_ID);
 		if (!configDir.exists() && !configDir.mkdirs())
 			throw new RuntimeException("Unable to create the configuration directory");
 

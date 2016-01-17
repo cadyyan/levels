@@ -3,6 +3,7 @@ package com.cadyyan.levels;
 import com.cadyyan.levels.handlers.ConfigurationHandler;
 import com.cadyyan.levels.plugins.PluginMinecraft;
 import com.cadyyan.levels.proxies.IProxy;
+import com.cadyyan.levels.registries.ExperienceRegistry;
 import com.cadyyan.levels.utils.SerializationHelper;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
@@ -35,6 +36,7 @@ public class Levels
 		ConfigurationHandler.init(event.getSuggestedConfigurationFile());
 
 		setupPlugins();
+		ExperienceRegistry.init();
 	}
 
 	@EventHandler

@@ -7,7 +7,6 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
-import ibxm.Player;
 import net.minecraft.entity.player.EntityPlayer;
 
 import java.io.*;
@@ -15,19 +14,19 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-public class LevelRegistry
+public class LevelStore
 {
 	private static final Gson jsonSerializer = (new GsonBuilder()).setPrettyPrinting()
 			.registerTypeAdapter(PlayerLevels.class, new PlayerLevels()).create();
-	private static LevelRegistry registry;
+	private static LevelStore registry;
 	private File playerLevelDirectory;
 	private Map<UUID, PlayerLevels> playerLevelCache = new HashMap<UUID, PlayerLevels>();
 	// TODO(cadyyan): cache the player data
 
-	public static LevelRegistry getInstance()
+	public static LevelStore getInstance()
 	{
 		if (registry == null)
-			registry = new LevelRegistry();
+			registry = new LevelStore();
 
 		return registry;
 	}
@@ -115,7 +114,7 @@ public class LevelRegistry
 		return playerLevelCache.getOrDefault(player, new PlayerLevels());
 	}
 
-	private LevelRegistry()
+	private LevelStore()
 	{
 		playerLevelDirectory = SerializationHelper.getPlayerDataDirectory();
 	}
