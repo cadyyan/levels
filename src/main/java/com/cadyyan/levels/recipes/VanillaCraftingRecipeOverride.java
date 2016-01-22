@@ -6,24 +6,13 @@ import com.cadyyan.levels.skills.ISkill;
 import com.cadyyan.levels.utils.LogUtility;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.*;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.ReflectionHelper;
 
 import java.util.Map;
 
-public class LevelRecipe implements IRecipe
+public class VanillaCraftingRecipeOverride extends RecipeOverride
 {
-	private final IRecipe recipe;
-	private final Map<ISkill, Integer> requiredSkills;
-
-	public LevelRecipe(IRecipe recipe, Map<ISkill, Integer> requiredSkills)
-	{
-		this.recipe         = recipe;
-		this.requiredSkills = requiredSkills;
-	}
-
 	@Override
 	public boolean matches(InventoryCrafting inventory, World world)
 	{
@@ -54,10 +43,10 @@ public class LevelRecipe implements IRecipe
 			return false;
 
 		PlayerLevels playerLevels = LevelStore.getInstance().getPlayerLevels(player);
-		for (Map.Entry<ISkill, Integer> skillEntry : requiredSkills.entrySet())
+		for (Map.Entry<ISkill, Integer> entry : recipeModification.getRequirements().entrySet())
 		{
-			ISkill skill = skillEntry.getKey();
-			int requiredLevel = skillEntry.getValue();
+			ISkill skill      = entry.getKey();
+			int requiredLevel = entry.getValue();
 
 			int level = playerLevels.getLevelForSkill(skill.getUnlocalizedName());
 			if (level < requiredLevel)
@@ -65,29 +54,5 @@ public class LevelRecipe implements IRecipe
 		}
 
 		return true;
-	}
-
-	@Override
-	public ItemStack getCraftingResult(InventoryCrafting inventory)
-	{
-		return recipe.getCraftingResult(inventory);
-	}
-
-	@Override
-	public int getRecipeSize()
-	{
-		return recipe.getRecipeSize();
-	}
-
-	@Override
-	public ItemStack getRecipeOutput()
-	{
-		return recipe.getRecipeOutput();
-	}
-
-	@Override
-	public ItemStack[] getRemainingItems(InventoryCrafting inventory)
-	{
-		return recipe.getRemainingItems(inventory);
 	}
 }

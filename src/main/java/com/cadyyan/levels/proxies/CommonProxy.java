@@ -2,26 +2,15 @@ package com.cadyyan.levels.proxies;
 
 import com.cadyyan.levels.Settings;
 import com.cadyyan.levels.handlers.PlayerEventHandlers;
-import com.cadyyan.levels.plugins.IPlugin;
-import com.cadyyan.levels.plugins.PluginMinecraft;
 import com.cadyyan.levels.registries.SkillRegistry;
 import com.cadyyan.levels.skills.SkillCarpentry;
-import com.cadyyan.levels.utils.LogUtility;
+import com.google.gson.Gson;
 import net.minecraftforge.common.MinecraftForge;
-
-import java.util.LinkedHashSet;
-import java.util.Set;
 
 @SuppressWarnings("unused")
 public class CommonProxy implements IProxy
 {
-	private Set<IPlugin> plugins = new LinkedHashSet<IPlugin>();
-
-	@Override
-	public void registerPlugin(IPlugin plugin)
-	{
-		plugins.add(plugin);
-	}
+	private final Gson gsonLoader = new Gson();
 
 	@Override
 	public void registerEventHandlers()
@@ -33,22 +22,5 @@ public class CommonProxy implements IProxy
 	{
 		if (Settings.Skills.enabledCarpentry)
 			SkillRegistry.getInstance().registerSkill(new SkillCarpentry());
-	}
-
-	@Override
-	public void initializePlugins()
-	{
-		for (IPlugin plugin : plugins)
-		{
-			LogUtility.trace("Initializing {} plugin", plugin.getName());
-
-			if (!plugin.versionMatches())
-				// TODO(cadyyan): this should be reported rather than causing a crash
-				throw new RuntimeException("Unsupported version");
-
-			plugin.init();
-
-			LogUtility.trace("{} plugin initialized", plugin.getName());
-		}
 	}
 }

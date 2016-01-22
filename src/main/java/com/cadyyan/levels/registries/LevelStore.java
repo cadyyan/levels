@@ -1,6 +1,6 @@
 package com.cadyyan.levels.registries;
 
-import com.cadyyan.levels.PlayerLevels;
+import com.cadyyan.levels.serializers.PlayerLevels;
 import com.cadyyan.levels.utils.LogUtility;
 import com.cadyyan.levels.utils.SerializationHelper;
 import com.google.gson.Gson;

@@ -1,4 +1,4 @@
-package com.cadyyan.levels;
+package com.cadyyan.levels.serializers;
 
 import com.google.gson.*;
 

@@ -34,4 +34,9 @@ public class SkillRegistry
 	{
 		return skills.values();
 	}
+
+	public boolean skillIsRegistered(String skillName)
+	{
+		return skills.containsKey(skillName);
+	}
 }

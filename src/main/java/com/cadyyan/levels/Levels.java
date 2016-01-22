@@ -1,9 +1,9 @@
 package com.cadyyan.levels;
 
+import com.cadyyan.levels.commands.CommandLevel;
 import com.cadyyan.levels.handlers.ConfigurationHandler;
-import com.cadyyan.levels.plugins.PluginMinecraft;
 import com.cadyyan.levels.proxies.IProxy;
-import com.cadyyan.levels.registries.ExperienceRegistry;
+import com.cadyyan.levels.registries.RecipeModificationRegistry;
 import com.cadyyan.levels.utils.SerializationHelper;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
@@ -34,9 +34,6 @@ public class Levels
 	public void preInit(FMLPreInitializationEvent event)
 	{
 		ConfigurationHandler.init(event.getSuggestedConfigurationFile());
-
-		setupPlugins();
-		ExperienceRegistry.init();
 	}
 
 	@EventHandler
@@ -44,23 +41,19 @@ public class Levels
 	{
 		proxy.registerEventHandlers();
 		proxy.registerSkills();
+		RecipeModificationRegistry.init();
 	}
 
 	@EventHandler
 	public void postInit(FMLPostInitializationEvent event)
 	{
-		proxy.initializePlugins();
 	}
 
 	@EventHandler
 	public void onServerStarting(FMLServerStartingEvent event)
 	{
 		SerializationHelper.init();
-	}
 
-	private void setupPlugins()
-	{
-		if (Settings.Plugins.enabledMinecraft)
-			proxy.registerPlugin(new PluginMinecraft());
+		event.registerServerCommand(new CommandLevel());
 	}
 }

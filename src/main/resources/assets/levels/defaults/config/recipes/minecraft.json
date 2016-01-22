@@ -1,0 +1,22 @@
+{
+  "minecraft:planks": {
+    "recipeType": "net.minecraft.item.crafting.ShapedRecipes",
+    "recipeOverrideType": "com.cadyyan.levels.recipes.VanillaCraftingRecipeOverride",
+    "requirements": {
+      "carpentry": 1
+    },
+    "experience": {
+      "carpentry": 1
+    }
+  },
+  "minecraft:chest": {
+    "recipeType": "net.minecraftforge.oredict.ShapedOreRecipe",
+    "recipeOverrideType": "com.cadyyan.levels.recipes.VanillaCraftingRecipeOverride",
+    "requirements": {
+      "carpentry": 1
+    },
+    "experience": {
+      "carpentry": 5
+    }
+  }
+}

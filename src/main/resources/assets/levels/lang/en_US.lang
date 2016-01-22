@@ -1,0 +1,3 @@
+commands.level.usage=/level <skillName> [username]
+
+skills.carpentry=Carpentry

@@ -1,9 +1,12 @@
 package com.cadyyan.levels.recipes;
 
+import com.cadyyan.levels.serializers.ItemRecipeModification;
 import net.minecraft.item.crafting.IRecipe;
 
 public interface IRecipeOverride
 {
-	boolean shouldOverrideRecipe(IRecipe recipe);
-	IRecipe override(IRecipe recipe);
+	IRecipe getRecipe();
+	ItemRecipeModification getRecipeModification();
+	void setRecipe(IRecipe recipe);
+	void setRecipeModification(ItemRecipeModification modification);
 }
