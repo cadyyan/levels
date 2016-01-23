@@ -4,7 +4,6 @@ import com.cadyyan.levels.serializers.PlayerLevels;
 import com.cadyyan.levels.utils.LogUtility;
 import com.cadyyan.levels.utils.SerializationHelper;
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 import net.minecraft.entity.player.EntityPlayer;
@@ -16,8 +15,7 @@ import java.util.UUID;
 
 public class LevelStore
 {
-	private static final Gson jsonSerializer = (new GsonBuilder()).setPrettyPrinting()
-			.registerTypeAdapter(PlayerLevels.class, new PlayerLevels()).create();
+	private static final Gson jsonSerializer = new Gson();
 	private static LevelStore registry;
 	private File playerLevelDirectory;
 	private Map<UUID, PlayerLevels> playerLevelCache = new HashMap<UUID, PlayerLevels>();
@@ -78,8 +76,6 @@ public class LevelStore
 			return;
 
 		File playerLevelFile = getPlayerLevelFile(playerUUID);
-		if (!playerLevelFile.exists() || !playerLevelFile.isFile())
-			return;
 
 		PlayerLevels playerLevels = playerLevelCache.get(playerUUID);
 		// TODO(cadyyan): it would probably also be beneficial to have a flag that says whether the data has even been modified
@@ -94,10 +90,15 @@ public class LevelStore
 			jsonWriter.setIndent("    ");
 			jsonSerializer.toJson(playerLevels, PlayerLevels.class, jsonWriter);
 			jsonWriter.close();
+
+			if (playerLevelFile.exists())
+				playerLevelFile.delete();
+
+			tmpFile.renameTo(playerLevelFile);
 		}
 		catch (IOException e)
 		{
-			LogUtility.error("Unable to save player {}'s level data to disk.\n{}", e.getStackTrace());
+			LogUtility.error("Unable to save player {}'s level data to disk.\n{}", playerUUID, e.getStackTrace());
 		}
 	}
 

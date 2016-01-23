@@ -1,12 +1,9 @@
 package com.cadyyan.levels.serializers;
 
-import com.google.gson.*;
-
-import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.Map;
 
-public class PlayerLevels implements JsonSerializer<PlayerLevels>, JsonDeserializer<PlayerLevels>
+public class PlayerLevels
 {
 	private static final double LOG_BASE_1_25 = Math.log(1.25);
 	private static final int MIN_LEVEL = 1;
@@ -92,39 +89,5 @@ public class PlayerLevels implements JsonSerializer<PlayerLevels>, JsonDeseriali
 	{
 		for (String skillName : this.experience.keySet())
 			reset(skillName);
-	}
-
-	@Override
-	public JsonElement serialize(PlayerLevels src, Type typeOfSrc, JsonSerializationContext context)
-	{
-		JsonObject serializedData = new JsonObject();
-
-		for (String skillName : experience.keySet())
-			serializedData.addProperty(skillName, experience.get(skillName));
-
-		return serializedData;
-	}
-
-	@Override
-	public PlayerLevels deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws
-			JsonParseException
-	{
-		if (!json.isJsonObject())
-			throw new JsonParseException("Malformed or unexpected JSON data found for player. Expected an object.");
-
-		JsonObject data = (JsonObject) json;
-		Map<String, Long> xp = new HashMap<String, Long>();
-		for (Map.Entry<String, JsonElement> entry : data.entrySet())
-		{
-			String skillName = entry.getKey();
-			JsonElement element = entry.getValue();
-
-			 if (!element.isJsonPrimitive())
-				 throw new JsonParseException("Malformed or unexpected JSON data found for player. Expected a primitive value.");
-
-			xp.put(skillName, element.getAsLong());
-		}
-
-		return new PlayerLevels(xp);
 	}
 }
