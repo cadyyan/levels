@@ -7,6 +7,9 @@ import com.cadyyan.levels.serializers.PlayerLevels;
 import com.cadyyan.levels.skills.ISkill;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ChatComponentText;
+import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.util.IChatComponent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.ItemCraftedEvent;
@@ -54,8 +57,18 @@ public class PlayerEventHandlers
 			ISkill skill = entry.getKey();
 			long xp      = entry.getValue();
 
-			playerLevels.addExperience(skill.getUnlocalizedName(), xp);
-			// TODO(cadyyan): handle level up
+			if (playerLevels.addExperience(skill.getUnlocalizedName(), xp))
+			{
+				// TODO(cadyyan): this needs to be translated
+				IChatComponent chatComponent = new ChatComponentText(
+						EnumChatFormatting.GREEN +
+						"Congratulations!" + EnumChatFormatting.RESET + " You've reached level " +
+						playerLevels.getLevelForSkill(skill.getUnlocalizedName()) +
+						" " + skill.getUnlocalizedName()
+				);
+
+				player.addChatMessage(chatComponent);
+			}
 		}
 	}
 }

@@ -30,7 +30,12 @@ public class PlayerLevels
 	{
 		long skillXP = getExperienceForSkill(skillName);
 
-		return Math.min((int) Math.floor(Math.log(skillXP / 100 + 1) / LOG_BASE_1_25) + 1, MAX_LEVEL);
+		return Math.min((int) Math.floor(Math.log(skillXP / 100.0 + 1.0) / LOG_BASE_1_25) + 1, MAX_LEVEL);
+	}
+
+	public int getRequiredExperience(String skillName)
+	{
+		return getRequiredExperience(getLevelForSkill(skillName) + 1);
 	}
 
 	public int getRequiredExperience(int level)
@@ -42,11 +47,18 @@ public class PlayerLevels
 		return (int) Math.floor(100 * Math.pow(1.25, level - 1) - 100);
 	}
 
-	public void addExperience(String skillName, long xp)
+	public boolean addExperience(String skillName, long xp)
 	{
-		long currentXP = this.getExperienceForSkill(skillName);
+		boolean leveledUp = false;
 
-		this.experience.put(skillName, currentXP + xp);
+		xp += this.getExperienceForSkill(skillName);
+
+		if (xp >= getRequiredExperience(skillName))
+			leveledUp = true;
+
+		this.experience.put(skillName, xp);
+
+		return leveledUp;
 	}
 
 	public void setExperience(String skillName, long xp)
