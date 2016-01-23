@@ -8,6 +8,7 @@ import com.cadyyan.levels.utils.LogUtility;
 import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.ShapedRecipes;
@@ -62,6 +63,22 @@ public class RecipeModificationRegistry
 	public static Class<? extends IRecipeOverride> getRecipeOverrideType(Class<? extends IRecipe> recipeType)
 	{
 		return recipeOverrideTypes.get(recipeType);
+	}
+
+	public static ItemRecipeModification getRecipeModification(ItemStack itemStack)
+	{
+		return getRecipeModification(itemStack.getItem());
+	}
+
+	public static ItemRecipeModification getRecipeModification(Item item)
+	{
+		// TODO(cadyyan): would it be more efficient to store the block/item instead of the name?
+		return getRecipeModification(Item.itemRegistry.getNameForObject(item).toString());
+	}
+
+	public static ItemRecipeModification getRecipeModification(String itemName)
+	{
+		return recipeModifications.get(itemName);
 	}
 
 	private static void initRecipeOverrideTypes()
@@ -157,7 +174,7 @@ public class RecipeModificationRegistry
 		IRecipeOverride recipeOverride  = recipeModification.getRecipeOverride();
 		CraftingManager craftingManager = CraftingManager.getInstance();
 		List<IRecipe> recipes           = craftingManager.getRecipeList();
-		Item item                       = GameRegistry.findItem(itemName.split(":")[0], itemName.split(":")[1]);
+		Item item                       = Item.getByNameOrId(itemName);
 
 		// This should be a modification safe way of doing this hopefully!
 		for (int i = recipes.size() - 1; i >= 0; i--)

@@ -111,7 +111,11 @@ public class LevelStore
 
 	public PlayerLevels getPlayerLevels(EntityPlayer player)
 	{
-		return playerLevelCache.getOrDefault(player, new PlayerLevels());
+		UUID playerUUID = player.getUniqueID();
+		if (!playerLevelCache.containsKey(playerUUID))
+			playerLevelCache.put(playerUUID, new PlayerLevels());
+
+		return playerLevelCache.get(playerUUID);
 	}
 
 	private LevelStore()

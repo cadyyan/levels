@@ -1,10 +1,17 @@
 package com.cadyyan.levels.handlers;
 
 import com.cadyyan.levels.registries.LevelStore;
+import com.cadyyan.levels.registries.RecipeModificationRegistry;
+import com.cadyyan.levels.serializers.ItemRecipeModification;
+import com.cadyyan.levels.serializers.PlayerLevels;
+import com.cadyyan.levels.skills.ISkill;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.ItemCraftedEvent;
+
+import java.util.Map;
 
 public class PlayerEventHandlers
 {
@@ -33,6 +40,22 @@ public class PlayerEventHandlers
 	@SubscribeEvent
 	public void onItemCrafted(ItemCraftedEvent event)
 	{
-		// TODO(cadyyan): handle crafting experience
+		// TODO(cadyyan): we may need to check for fake players
+		EntityPlayer player = event.player;
+		ItemStack itemStack = event.crafting;
+
+		PlayerLevels playerLevels                 = LevelStore.getInstance().getPlayerLevels(player);
+		ItemRecipeModification recipeModification = RecipeModificationRegistry.getRecipeModification(itemStack);
+		if (recipeModification == null)
+			return;
+
+		for (Map.Entry<ISkill, Long> entry : recipeModification.getExperience().entrySet())
+		{
+			ISkill skill = entry.getKey();
+			long xp      = entry.getValue();
+
+			playerLevels.addExperience(skill.getUnlocalizedName(), xp);
+			// TODO(cadyyan): handle level up
+		}
 	}
 }

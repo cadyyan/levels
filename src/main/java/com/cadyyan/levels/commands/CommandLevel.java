@@ -35,8 +35,8 @@ public class CommandLevel extends CommandBase
 
 		// TODO(cadyyan): handle localization of text
 
-		String skillName = args[1];
-		if (SkillRegistry.getInstance().skillIsRegistered(skillName))
+		String skillName = args[0];
+		if (!SkillRegistry.getInstance().skillIsRegistered(skillName))
 		{
 			IChatComponent chatComponent = new ChatComponentText(skillName + " is not a valid skill");
 			sender.addChatMessage(chatComponent);
