@@ -6,6 +6,9 @@ import com.cadyyan.levels.skills.ISkill;
 import com.cadyyan.levels.utils.LogUtility;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.*;
+import net.minecraft.util.ChatComponentText;
+import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.util.IChatComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.ReflectionHelper;
 
@@ -50,7 +53,22 @@ public class VanillaCraftingRecipeOverride extends RecipeOverride
 
 			int level = playerLevels.getLevelForSkill(skill.getUnlocalizedName());
 			if (level < requiredLevel)
+			{
+				if (!world.isRemote)
+				{
+					// TODO(cadyyan): this will need to be translated
+					IChatComponent chatComponent = new ChatComponentText(
+							EnumChatFormatting.ITALIC +
+									"You think you could create something like this but you're not quite skilled enough." +
+									EnumChatFormatting.RED + "Requires " + requiredLevel + " " + skill
+									.getUnlocalizedName() +
+									EnumChatFormatting.RESET
+					);
+					player.addChatMessage(chatComponent);
+				}
+
 				return false;
+			}
 		}
 
 		return true;
