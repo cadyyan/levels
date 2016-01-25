@@ -47,6 +47,9 @@ public class PlayerEventHandlers
 		EntityPlayer player = event.player;
 		ItemStack itemStack = event.crafting;
 
+		if (player.worldObj.isRemote)
+			return;
+
 		PlayerLevels playerLevels                 = LevelStore.getInstance().getPlayerLevels(player);
 		ItemRecipeModification recipeModification = RecipeModificationRegistry.getRecipeModification(itemStack);
 		if (recipeModification == null)
