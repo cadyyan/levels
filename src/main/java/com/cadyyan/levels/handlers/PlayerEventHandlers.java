@@ -52,10 +52,10 @@ public class PlayerEventHandlers
 		if (recipeModification == null)
 			return;
 
-		for (Map.Entry<ISkill, Long> entry : recipeModification.getExperience().entrySet())
+		for (Map.Entry<ISkill, Double> entry : recipeModification.getExperience().entrySet())
 		{
 			ISkill skill = entry.getKey();
-			long xp      = entry.getValue();
+			double xp    = entry.getValue();
 
 			if (playerLevels.addExperience(skill.getUnlocalizedName(), xp))
 			{

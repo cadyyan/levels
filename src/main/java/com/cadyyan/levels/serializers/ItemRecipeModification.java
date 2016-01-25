@@ -18,7 +18,7 @@ public class ItemRecipeModification
 	@SuppressWarnings({"MismatchedQueryAndUpdateOfCollection", "unused"})
 	private Map<String, Integer> requirements;
 	@SuppressWarnings({"MismatchedQueryAndUpdateOfCollection", "unused"})
-	private Map<String, Long> experience; // TODO(cadyyan): it would be nice to make this a floating point value
+	private Map<String, Double> experience;
 
 	public ItemRecipeModification()
 	{
@@ -86,12 +86,12 @@ public class ItemRecipeModification
 		return results;
 	}
 
-	public final Map<ISkill, Long> getExperience()
+	public final Map<ISkill, Double> getExperience()
 	{
-		Map<ISkill, Long> results = new HashMap<ISkill, Long>();
+		Map<ISkill, Double> results = new HashMap<ISkill, Double>();
 		SkillRegistry skillRegistry = SkillRegistry.getInstance();
 
-		for (Map.Entry<String, Long> entry : experience.entrySet())
+		for (Map.Entry<String, Double> entry : experience.entrySet())
 		{
 			String skillName = entry.getKey();
 

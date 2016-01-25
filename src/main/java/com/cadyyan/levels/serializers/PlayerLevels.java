@@ -9,45 +9,45 @@ public class PlayerLevels
 	private static final int MIN_LEVEL = 1;
 	private static final int MAX_LEVEL = 99;
 
-	private Map<String, Long> experience;
+	private Map<String, Double> experience;
 
 	public PlayerLevels()
 	{
-		this(new HashMap<String, Long>());
+		this(new HashMap<String, Double>());
 	}
 
-	public PlayerLevels(Map<String, Long> experience)
+	public PlayerLevels(Map<String, Double> experience)
 	{
 		this.experience = experience;
 	}
 
-	public long getExperienceForSkill(String skillName)
+	public double getExperienceForSkill(String skillName)
 	{
-		return experience.getOrDefault(skillName, 0L);
+		return experience.getOrDefault(skillName, 0.0);
 	}
 
 	public int getLevelForSkill(String skillName)
 	{
-		long skillXP = getExperienceForSkill(skillName);
+		double skillXP = getExperienceForSkill(skillName);
 
-		return Math.min((int) Math.floor(Math.log(skillXP / 100.0 + 1.0) / LOG_BASE_1_25) + 1, MAX_LEVEL);
+		return (int) Math.min(Math.floor(Math.log(skillXP / 100.0 + 1.0) / LOG_BASE_1_25) + 1.0, MAX_LEVEL);
 	}
 
-	public int getRequiredExperience(String skillName)
+	public double getRequiredExperience(String skillName)
 	{
 		return getRequiredExperience(getLevelForSkill(skillName) + 1);
 	}
 
-	public int getRequiredExperience(int level)
+	public double getRequiredExperience(int level)
 	{
 		if (level < MIN_LEVEL || level > MAX_LEVEL)
 			throw new IllegalArgumentException(
 					"Levels must be between " + Integer.toString(MIN_LEVEL) + " and " + Integer.toString(MAX_LEVEL));
 
-		return (int) Math.floor(100 * Math.pow(1.25, level - 1) - 100);
+		return 100.0 * Math.pow(1.25, level - 1.0) - 100.0;
 	}
 
-	public boolean addExperience(String skillName, long xp)
+	public boolean addExperience(String skillName, double xp)
 	{
 		boolean leveledUp = false;
 
@@ -61,7 +61,7 @@ public class PlayerLevels
 		return leveledUp;
 	}
 
-	public void setExperience(String skillName, long xp)
+	public void setExperience(String skillName, double xp)
 	{
 		this.experience.put(skillName, xp);
 	}
@@ -87,14 +87,14 @@ public class PlayerLevels
 
 	public void setLevel(String skillName, int level)
 	{
-		long xp = this.getRequiredExperience(level);
+		double xp = this.getRequiredExperience(level);
 
 		this.experience.put(skillName, xp);
 	}
 
 	public void reset(String skillName)
 	{
-		this.experience.put(skillName, 0L);
+		this.experience.put(skillName, 0.0);
 	}
 
 	public void resetAll()
