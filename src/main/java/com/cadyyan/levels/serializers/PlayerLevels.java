@@ -70,7 +70,7 @@ public class PlayerLevels
 	{
 		int currentLevel = this.getLevelForSkill(skillName);
 
-		// Do nothing if we're already maxed out. This prevents us from reseting someones experience on accident
+		// Do nothing if we're already maxed out. This prevents us from resetting someones experience on accident
 		if (currentLevel == MAX_LEVEL)
 			return;
 
