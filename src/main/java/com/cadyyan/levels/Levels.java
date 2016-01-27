@@ -15,7 +15,7 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 
 @SuppressWarnings("unused")
-@Mod(modid = Levels.MOD_ID, name = Levels.NAME, version = Levels.VERSION)
+@Mod(modid = Levels.MOD_ID, name = Levels.NAME, version = Levels.VERSION, acceptedMinecraftVersions = "[1.8.9]")
 public class Levels
 {
 	public static final String MOD_ID  = "levels";
