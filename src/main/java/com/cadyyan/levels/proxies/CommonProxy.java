@@ -1,6 +1,7 @@
 package com.cadyyan.levels.proxies;
 
 import com.cadyyan.levels.Settings;
+import com.cadyyan.levels.handlers.ConfigurationHandler;
 import com.cadyyan.levels.handlers.PlayerEventHandlers;
 import com.cadyyan.levels.registries.SkillRegistry;
 import com.cadyyan.levels.skills.SkillCarpentry;
@@ -15,6 +16,7 @@ public class CommonProxy implements IProxy
 	@Override
 	public void registerEventHandlers()
 	{
+		MinecraftForge.EVENT_BUS.register(new ConfigurationHandler());
 		MinecraftForge.EVENT_BUS.register(new PlayerEventHandlers());
 	}
 

@@ -27,6 +27,9 @@ public class ConfigurationHandler
 		configuration = new Configuration(generalConfigFile, true);
 		loadConfiguration();
 
+		if (configuration.hasChanged())
+			configuration.save();
+
 		File recipeDir = new File(configDir, "recipes");
 		try
 		{
