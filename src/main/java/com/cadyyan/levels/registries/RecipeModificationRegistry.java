@@ -4,6 +4,7 @@ import com.cadyyan.levels.handlers.ConfigurationHandler;
 import com.cadyyan.levels.recipes.IRecipeOverride;
 import com.cadyyan.levels.recipes.VanillaCraftingRecipeOverride;
 import com.cadyyan.levels.serializers.ItemRecipeModification;
+import com.cadyyan.levels.utils.BlockItemHelper;
 import com.cadyyan.levels.utils.LogUtility;
 import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
@@ -13,7 +14,6 @@ import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.ShapedRecipes;
 import net.minecraft.item.crafting.ShapelessRecipes;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.RecipeSorter;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
@@ -73,7 +73,7 @@ public class RecipeModificationRegistry
 	public static ItemRecipeModification getRecipeModification(Item item)
 	{
 		// TODO(cadyyan): would it be more efficient to store the block/item instead of the name?
-		return getRecipeModification(Item.itemRegistry.getNameForObject(item).toString());
+		return getRecipeModification(BlockItemHelper.getResourceLocationString(item));
 	}
 
 	public static ItemRecipeModification getRecipeModification(String itemName)

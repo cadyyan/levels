@@ -47,6 +47,7 @@ public class Levels
 	@EventHandler
 	public void postInit(FMLPostInitializationEvent event)
 	{
+		proxy.dumpRecipes();
 	}
 
 	@EventHandler

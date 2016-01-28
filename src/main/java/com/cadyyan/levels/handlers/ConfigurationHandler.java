@@ -48,7 +48,33 @@ public class ConfigurationHandler
 
 	public static void loadConfiguration()
 	{
-		Settings.Skills.enabledCarpentry = configuration.getBoolean("carpentry", "skills", true, "Enable the carpentry skill");
+		Settings.Debug.enableDebug = configuration.getBoolean(
+			"enable",
+			"debug",
+			false,
+			"Enable debug mode"
+		);
+
+		Settings.Debug.enableRecipeDump = configuration.getBoolean(
+			"recipeDump",
+			"debug",
+			false,
+			"Enable recipe dump (requires debug option)"
+		) && Settings.Debug.enableDebug;
+
+		Settings.Debug.enableSmartRecipeDump = configuration.getBoolean(
+			"smartRecipeDump",
+			"debug",
+			false,
+			"Exclude recipes that have been modified already (requires recipeDump option)"
+		) && Settings.Debug.enableRecipeDump;
+
+		Settings.Skills.enabledCarpentry = configuration.getBoolean(
+			"carpentry",
+			"skills",
+			true,
+			"Enable the carpentry skill"
+		);
 	}
 
 	@SubscribeEvent

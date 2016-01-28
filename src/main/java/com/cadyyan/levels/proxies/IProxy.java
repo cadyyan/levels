@@ -4,4 +4,5 @@ public interface IProxy
 {
 	void registerEventHandlers();
 	void registerSkills();
+	void dumpRecipes();
 }
